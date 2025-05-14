@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Chess Club",
+    "type": "Club",
+    "time": "Wednesdays 3:30pm",
+    "description": "Sharpen your mind and compete in tournaments!"
+  },
+  {
+    "id": 2,
+    "name": "Drama Society",
+    "type": "Arts",
+    "time": "Fridays 4:00pm",
+    "description": "Act, direct, and produce school plays and skits."
+  },
+  {
+    "id": 3,
+    "name": "Robotics Team",
+    "type": "STEM",
+    "time": "Mondays 3:30pm",
+    "description": "Build and program robots for competitions."
+  }
+]

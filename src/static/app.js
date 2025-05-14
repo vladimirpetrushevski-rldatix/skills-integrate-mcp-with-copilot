@@ -7,62 +7,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
-      const response = await fetch("/activities");
+      const response = await fetch("activities.json");
       const activities = await response.json();
 
       // Clear loading message
       activitiesList.innerHTML = "";
 
       // Populate activities list
-      Object.entries(activities).forEach(([name, details]) => {
+      activities.forEach((activity) => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
 
-        const spotsLeft =
-          details.max_participants - details.participants.length;
-
-        // Create participants HTML with delete icons instead of bullet points
-        const participantsHTML =
-          details.participants.length > 0
-            ? `<div class="participants-section">
-              <h5>Participants:</h5>
-              <ul class="participants-list">
-                ${details.participants
-                  .map(
-                    (email) =>
-                      `<li><span class="participant-email">${email}</span><button class="delete-btn" data-activity="${name}" data-email="${email}">❌</button></li>`
-                  )
-                  .join("")}
-              </ul>
-            </div>`
-            : `<p><em>No participants yet</em></p>`;
-
         activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
-          <div class="participants-container">
-            ${participantsHTML}
-          </div>
+          <h4>${activity.name}</h4>
+          <p><strong>Type:</strong> ${activity.type}</p>
+          <p><strong>Time:</strong> ${activity.time}</p>
+          <p>${activity.description}</p>
         `;
 
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
         const option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
+        option.value = activity.id;
+        option.textContent = activity.name;
         activitySelect.appendChild(option);
-      });
-
-      // Add event listeners to delete buttons
-      document.querySelectorAll(".delete-btn").forEach((button) => {
-        button.addEventListener("click", handleUnregister);
       });
     } catch (error) {
       activitiesList.innerHTML =
-        "<p>Failed to load activities. Please try again later.</p>";
+        "<p class='error'>Failed to load activities.</p>";
       console.error("Error fetching activities:", error);
     }
   }
